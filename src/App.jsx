@@ -5,7 +5,6 @@ import SongCard from './components/SongCard'
 
 function App() {
   const [count, setCount] = useState(0)
-  const [computerRes, setComputerRes] = useState("Type Something In")
   const [reccSongs, setReccSongs] = useState([])
   
 
@@ -13,16 +12,6 @@ function App() {
     e.preventDefault()
 
     try {
-      //   const aiRes = await fetch("http://localhost:8000/messages/ai/", {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json"
-      //     },
-      //     body: JSON.stringify({
-      //       "owner": "test",
-      //       "message": e.target[0].value,
-      //     })
-      //   })
 
       // setComputerRes(await aiRes.json())
 
@@ -32,8 +21,7 @@ function App() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          "songName": "",
-          "artist": "Taylor Swift"
+          "message": e.target[0].value,
         })
       })
       const spotifyData = await spotifyRes.json();
@@ -55,7 +43,7 @@ function App() {
     }
 
   }
-  console.log(reccSongs)
+
 
   return (
     
@@ -66,20 +54,13 @@ function App() {
         <input type="submit" />
       </form>
 
-      <p>{
-        computerRes ?
-          computerRes :
-          ""
-
-      }</p>
-
       {
         reccSongs ?
         
         reccSongs.map((s, i) => {
           return (
             <div>
-              <SongCard key={i} songId={s}/>
+              <SongCard key={i} songId={s[1]} songExplanation={s[0]}/>
             </div>
           )
         }) :
