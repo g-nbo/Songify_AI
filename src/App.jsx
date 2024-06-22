@@ -8,6 +8,7 @@ function App() {
   const [reccSongs, setReccSongs] = useState([])
   
 
+  // When user submits a message give it to GPT to respond with a song reccommendation
   async function handleSubmit(e) {
     e.preventDefault()
 
@@ -32,10 +33,9 @@ function App() {
         ...reccSongs,
         newSong
       ])
-      
-
-
-
+      // AFTER THAT START ADDING CRUD FUNCTIONALITY WITH 
+      // LOGIN PAGE, 
+      // Create favoriting songs, view favorited songs, delete favorited songs, update username/password
 
       e.target[0].value = ""
     } catch (err) {
