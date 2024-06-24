@@ -1,75 +1,34 @@
 import { useEffect, useState } from 'react'
+import { BrowserRouter, Routes, Route} from 'react-router-dom'
 import './App.css'
-import SongCard from './components/SongCard'
-
+import MusicPage from './pages/MusicPage'
+import HomePage from './pages/HomePage'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import UserContext from './context/UserContext'
+import FavoritesPage from './pages/FavoritesPage'
 
 function App() {
   const [count, setCount] = useState(0)
-  const [reccSongs, setReccSongs] = useState([])
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('userId')))
   
-
-  // When user submits a message give it to GPT to respond with a song reccommendation
-  async function handleSubmit(e) {
-    e.preventDefault()
-
-    try {
-
-      // setComputerRes(await aiRes.json())
-
-      const spotifyRes = await fetch("http://localhost:8000/messages/spotify/song", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          "message": e.target[0].value,
-        })
-      })
-      const spotifyData = await spotifyRes.json();
-      
-      const newSong = spotifyData
-
-      setReccSongs([
-        ...reccSongs,
-        newSong
-      ])
-      // AFTER THAT START ADDING CRUD FUNCTIONALITY WITH 
-      // LOGIN PAGE, 
-      // Create favoriting songs, view favorited songs, delete favorited songs, update username/password
-
-      e.target[0].value = ""
-    } catch (err) {
-      console.log(err)
-    }
-
-  }
-
+  
 
   return (
     
-    <>
-      <form onSubmit={(e) => handleSubmit(e)} action="#">
-        <label htmlFor="message">Send Message: </label> <br />
-        <input placeholder='message' type="text" name="message" id="message" />
-        <input type="submit" />
-      </form>
-
-      {
-        reccSongs ?
-        
-        reccSongs.map((s, i) => {
-          return (
-            <div>
-              <SongCard key={i} songId={s[1]} songExplanation={s[0]}/>
-            </div>
-          )
-        }) :
-        ""
-      }
-      
-      
-      
-    </>
+    <UserContext.Provider value={{"user": user}}>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/'>
+            <Route index element={<HomePage />} />
+            <Route path='login' element={<LoginPage setUser={setUser} />} />
+            <Route path='register' element={<RegisterPage />} />
+            <Route path='music' element={<MusicPage />} />
+            <Route path='favorites' element={<FavoritesPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter >
+    </UserContext.Provider>
   )
 }
 
