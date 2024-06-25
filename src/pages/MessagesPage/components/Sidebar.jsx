@@ -70,7 +70,7 @@ export default function Sidebar() {
 
   function logout() {
     localStorage.getItem("userId") ?
-      navigate('/home') :
+      navigate('/') :
       console.log("cant logout if you're not logged in")
 
     localStorage.removeItem("userId")
@@ -163,7 +163,7 @@ export default function Sidebar() {
             <ListItemButton
               role="menuitem"
               component="a"
-              href="home"
+              href="/"
             >
               <HomeRoundedIcon />
               <ListItemContent>

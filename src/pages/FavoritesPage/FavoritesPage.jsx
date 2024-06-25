@@ -20,7 +20,7 @@ function FavoritesPage() {
         <div id="favorites">
             <br />
             <div>
-            <Link href='home' color="primary">
+            <Link href='/' color="primary">
                 <HomeRounded />
             </Link>
             <Link href='messages' color="primary">
@@ -44,7 +44,7 @@ function FavoritesPage() {
             }
             <br />
             <div>
-            <Link href='home' color="primary">
+            <Link href='/' color="primary">
                 <HomeRounded />
             </Link>
             <Link href='messages' color="primary">
