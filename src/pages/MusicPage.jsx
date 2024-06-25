@@ -13,26 +13,31 @@ function MusicPage() {
 
         try {
 
-            const spotifyRes = await fetch("http://localhost:8000/songify/song", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "message": e.target[0].value,
+            if (e.target[0].value) {
+                const spotifyRes = await fetch("http://localhost:8000/songify/song", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "message": e.target[0].value,
+                    })
                 })
-            })
 
-            const spotifyData = await spotifyRes.json();
-            const newSong = spotifyData
+                const spotifyData = await spotifyRes.json();
+                const newSong = spotifyData
 
-            setReccSongs([
-                ...reccSongs,
-                newSong
-            ])
+                setReccSongs([
+                    ...reccSongs,
+                    newSong
+                ])
 
+                e.target[0].value = ""
+            } else {
+                console.log("Err: no message")
+            }
 
-            e.target[0].value = ""
+            
         } catch (err) {
             console.log(err)
         }
@@ -56,7 +61,7 @@ function MusicPage() {
 
                     reccSongs.map((s, i) => {
                         return (
-                            <div>
+                            <div key={i}>
                                 <SongCard key={i} songId={s[1]} songExplanation={s[0]} />
                             </div>
                         )

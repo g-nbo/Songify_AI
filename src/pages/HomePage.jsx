@@ -17,6 +17,8 @@ function HomePage() {
             <br />
             <a href="favorites">Favorites</a>
             <br />
+            <a href="landing">Landing Page</a>
+            <br />
             <button onClick={logout}>Logout</button>
         </div>
     )
