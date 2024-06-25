@@ -17,6 +17,7 @@ import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
 import GoogleIcon from './GoogleIcon';
 import { IconButton } from '@mui/joy';
+import { useNavigate } from 'react-router-dom';
 
 function ColorSchemeToggle(props) {
   const { onClick, ...other } = props;
@@ -24,6 +25,10 @@ function ColorSchemeToggle(props) {
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => setMounted(true), []);
+
+  
+
+
 
   return (
     <IconButton
@@ -43,6 +48,33 @@ function ColorSchemeToggle(props) {
 }
 
 export default function JoySignInSideTemplate() {
+  const navigate = useNavigate()
+
+  async function handleSubmit(d) {
+    
+
+    const res = await fetch("http://localhost:8000/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        'email': d.email,
+        'password': d.password,
+      })
+    })
+
+    const data = await res.json()
+    
+
+    if (data) {
+      localStorage.setItem('userId', JSON.stringify(data))
+      navigate('../landing')
+    }
+
+
+  }
+
   return (
     <CssVarsProvider defaultMode="dark" disableTransitionOnChange>
       <CssBaseline />
@@ -158,7 +190,7 @@ export default function JoySignInSideTemplate() {
                     password: formElements.password.value,
                     persistent: formElements.persistent.checked,
                   };
-                  alert(JSON.stringify(data, null, 2));
+                  handleSubmit(data);
                 }}
               >
                 <FormControl required>
