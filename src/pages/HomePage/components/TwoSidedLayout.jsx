@@ -3,6 +3,7 @@ import AspectRatio from '@mui/joy/AspectRatio';
 import Box from '@mui/joy/Box';
 import Container from '@mui/joy/Container';
 import { typographyClasses } from '@mui/joy/Typography';
+import { backdropClasses } from '@mui/material';
 
 export default function TwoSidedLayout({
   children,
@@ -67,8 +68,9 @@ export default function TwoSidedLayout({
         })}
       >
         <img
-          src="https://images.unsplash.com/photo-1483791424735-e9ad0209eea2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+          src="https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-logo-spotify-symbol-3.png"
           alt=""
+          style={{backgroundColor: "black", maxHeight: "90em"}}
         />
       </AspectRatio>
     </Container>

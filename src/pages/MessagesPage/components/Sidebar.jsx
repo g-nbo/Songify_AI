@@ -29,9 +29,19 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LoginIcon from '@mui/icons-material/Login';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import { Link } from '@mui/joy';
 
 import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '../utils';
+import { useNavigate } from 'react-router-dom';
+import Login from '@mui/icons-material/Login';
+
+
 
 function Toggler(props) {
   const { defaultExpanded = false, renderToggle, children } = props;
@@ -56,6 +66,16 @@ function Toggler(props) {
 }
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+
+  function logout() {
+    localStorage.getItem("userId") ?
+      navigate('/home') :
+      console.log("cant logout if you're not logged in")
+
+    localStorage.removeItem("userId")
+  }
+
   return (
     <Sheet
       className="Sidebar"
@@ -84,7 +104,7 @@ export default function Sidebar() {
           ':root': {
             '--Sidebar-width': '220px',
             [theme.breakpoints.up('lg')]: {
-              '--Sidebar-width': '240px',
+              '--Sidebar-width': '20%',
             },
           },
         })}
@@ -109,8 +129,11 @@ export default function Sidebar() {
         onClick={() => closeSidebar()}
       />
       <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-        <IconButton variant="soft" color="primary" size="sm">
-          <BrightnessAutoRoundedIcon />
+        <IconButton variant="soft" size="md">
+          <Link color="secondary" href='home'>
+            <SmartToyIcon />
+          </Link>
+
         </IconButton>
         <Typography level="title-lg">SongifyAI</Typography>
         <ColorSchemeToggle sx={{ ml: 'auto' }} />
@@ -138,9 +161,9 @@ export default function Sidebar() {
         >
           <ListItem>
             <ListItemButton
-            role="menuitem"
-            component="a"
-            href="home"
+              role="menuitem"
+              component="a"
+              href="home"
             >
               <HomeRoundedIcon />
               <ListItemContent>
@@ -154,7 +177,7 @@ export default function Sidebar() {
               component="a"
               href="favorites"
             >
-              <ShoppingCartRoundedIcon />
+              <FavoriteIcon />
               <ListItemContent>
                 <Typography level="title-sm">Favorites</Typography>
               </ListItemContent>
@@ -175,11 +198,11 @@ export default function Sidebar() {
 
           <ListItem>
             <ListItemButton
-            role="menuitem"
-            component="a"
-            href="login"
+              role="menuitem"
+              component="a"
+              href="login"
             >
-              <DashboardRoundedIcon />
+              <Login />
               <ListItemContent>
                 <Typography level="title-sm">Login</Typography>
               </ListItemContent>
@@ -191,14 +214,14 @@ export default function Sidebar() {
               component="a"
               href="register"
             >
-              <ShoppingCartRoundedIcon />
+              <AppRegistrationIcon />
               <ListItemContent>
                 <Typography level="title-sm">Register</Typography>
               </ListItemContent>
             </ListItemButton>
           </ListItem>
 
-          
+
         </List>
         <List
           size="sm"
@@ -250,13 +273,13 @@ export default function Sidebar() {
         <Avatar
           variant="outlined"
           size="sm"
-          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
+          src=""
         />
         <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography level="title-sm">Siriwat K.</Typography>
-          <Typography level="body-xs">siriwatk@test.com</Typography>
+          <Typography level="title-sm">User</Typography>
+          <Typography level="body-xs">User@User.com</Typography>
         </Box>
-        <IconButton size="sm" variant="plain" color="neutral">
+        <IconButton onClick={() => logout()} size="sm" variant="plain" color="neutral">
           <LogoutRoundedIcon />
         </IconButton>
       </Box>

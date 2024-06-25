@@ -4,7 +4,7 @@ import UserContext from "../context/UserContext";
 
 function SongCard(props) {
     const context = useContext(UserContext)
-    
+    console.log(props.songId)
 
 
     // When user clicks favorite

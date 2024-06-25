@@ -2,9 +2,9 @@ const date = new Date()
 
 export const users = [
   {
-    name: 'GPT',
-    username: '@OpenAI',
-    avatar: '/static/images/avatar/2.jpg',
+    name: 'Songify',
+    username: '@SongifyAI',
+    avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/2048px-Spotify_logo_without_text.svg.png',
     online: true,
   }
 ];

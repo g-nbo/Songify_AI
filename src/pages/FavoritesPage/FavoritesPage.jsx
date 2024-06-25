@@ -1,23 +1,25 @@
-import UserContext from "../context/UserContext";
+import UserContext from "../../context/UserContext";
 import { useContext, useEffect, useState } from "react";
-import SongCard from "../components/SongCard";
+import SongCard from "../../components/SongCard";
+import './favorites.css'
 
 
 
 function FavoritesPage() {
 
     const context = useContext(UserContext)
-    const [favorites, setFavorites] = useState(context.user.favorites)
+    
     
 
     
 
     return (
         <>
-            <p>{context.user.name}</p>
+            
             {
-                context.user.favorites.length ?
+                context.user ?
                     <>
+                        <p>{context.user.name}</p>
                         <p>Favorites: </p>
                         {
                     context.user.favorites.map((f, i) => {
@@ -25,12 +27,12 @@ function FavoritesPage() {
                     })
                 }
                     </> :
-                    "No Favorites Found"
+                    <h1>No Favorites Found</h1>
             }
             <br />
-            <a href="/">Home</a>
+            <a href="/home">Home</a>
             <br />
-            <a href="/music">Music</a>
+            <a href="/messages">Music</a>
         </>
     )
 }

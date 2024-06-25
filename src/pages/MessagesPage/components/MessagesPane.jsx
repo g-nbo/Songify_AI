@@ -52,7 +52,7 @@ export default function MessagesPane(props) {
           },
           {
             id: newIdString + 1,
-            sender: '@OpenAI',
+            sender: '@SongifyAI',
             content: <SongCard key={newId} songId={newSong[1]} songExplanation={newSong[0]} />,
             timestamp: 'Just Now',
           }
@@ -112,7 +112,7 @@ export default function MessagesPane(props) {
                     src={message.sender.avatar}
                   />
                 )}
-                <ChatBubble variant={isYou ? 'sent' : 'received'} {...message} />
+                <ChatBubble songId={reccSong[1]} variant={isYou ? 'sent' : 'received'} {...message} />
               </Stack>
             );
           })}

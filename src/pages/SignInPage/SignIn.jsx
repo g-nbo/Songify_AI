@@ -18,6 +18,7 @@ import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
 import GoogleIcon from './GoogleIcon';
 import { IconButton } from '@mui/joy';
 import { useNavigate } from 'react-router-dom';
+import SmartToy from '@mui/icons-material/SmartToy';
 
 function ColorSchemeToggle(props) {
   const { onClick, ...other } = props;
@@ -120,10 +121,12 @@ export default function JoySignInSideTemplate() {
             }}
           >
             <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
-              <IconButton variant="soft" color="primary" size="sm">
-                <BadgeRoundedIcon />
+              <IconButton variant="soft" size="sm">
+              <Link color="secondary" href='home'>
+                  <SmartToy />
+                </Link>
               </IconButton>
-              <Typography level="title-lg">Company logo</Typography>
+              <Typography level="title-lg">Songify AI</Typography>
             </Box>
             <ColorSchemeToggle />
           </Box>
@@ -156,8 +159,8 @@ export default function JoySignInSideTemplate() {
                   Sign in
                 </Typography>
                 <Typography level="body-sm">
-                  New to company?{' '}
-                  <Link href="#replace-with-a-link" level="title-sm">
+                  Don't Have An Account?{' '}
+                  <Link href="register" level="title-sm">
                     Sign up!
                   </Link>
                 </Typography>
@@ -193,11 +196,11 @@ export default function JoySignInSideTemplate() {
                   handleSubmit(data);
                 }}
               >
-                <FormControl required>
+                <FormControl >
                   <FormLabel>Email</FormLabel>
-                  <Input type="email" name="email" />
+                  <Input type="text" name="email" />
                 </FormControl>
-                <FormControl required>
+                <FormControl >
                   <FormLabel>Password</FormLabel>
                   <Input type="password" name="password" />
                 </FormControl>
@@ -210,7 +213,7 @@ export default function JoySignInSideTemplate() {
                     }}
                   >
                     <Checkbox size="sm" label="Remember me" name="persistent" />
-                    <Link level="title-sm" href="#replace-with-a-link">
+                    <Link level="title-sm" href="login">
                       Forgot your password?
                     </Link>
                   </Box>
@@ -223,7 +226,7 @@ export default function JoySignInSideTemplate() {
           </Box>
           <Box component="footer" sx={{ py: 3 }}>
             <Typography level="body-xs" textAlign="center">
-              © Your company {new Date().getFullYear()}
+              © Songify AI {new Date().getFullYear()}
             </Typography>
           </Box>
         </Box>
@@ -244,10 +247,12 @@ export default function JoySignInSideTemplate() {
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           backgroundImage:
-            'url(https://images.unsplash.com/photo-1527181152855-fc03fc7949c8?auto=format&w=1000&dpr=2)',
+            'url(https://static.vecteezy.com/system/resources/previews/022/841/111/original/chatgpt-logo-transparent-background-free-png.png)',
           [theme.getColorSchemeSelector('dark')]: {
+            backgroundSize: '100vh',
+            backgroundRepeat: 'repeat',
             backgroundImage:
-              'url(https://images.unsplash.com/photo-1572072393749-3ca9c8ea0831?auto=format&w=1000&dpr=2)',
+              'url(https://www.logo.wine/a/logo/Spotify/Spotify-White-Dark-Background-Logo.wine.svg)',
           },
         })}
       />

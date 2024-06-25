@@ -9,7 +9,7 @@ import TwoSidedLayout from '../components/TwoSidedLayout';
 export default function HeroLeft01() {
   return (
     <TwoSidedLayout>
-      <Typography color="primary" fontSize="lg" fontWeight="lg">
+      <Typography style={{color: "lime"}} fontSize="lg" fontWeight="lg">
         @SongifyAI
       </Typography>
       <Typography
@@ -23,12 +23,12 @@ export default function HeroLeft01() {
         Discover the Perfect Soundtrack for You – Instant, Personalized Music Recommendations Powered by AI!
       </Typography>
       <Link href="messages">
-        <Button size="lg" endDecorator={<ArrowForward fontSize="xl" />}>
+        <Button style={{backgroundColor: "lime"}} size="lg" endDecorator={<ArrowForward fontSize="xl" />}>
           Get Started
         </Button>
       </Link>
       <Typography>
-        Already a member? <Link href="login" fontWeight="lg">Sign in</Link>
+        Already a member? <Link style={{color: "lime"}} href="login" fontWeight="lg">Sign in</Link>
       </Typography>
       <Typography
         level="body-xs"
@@ -39,7 +39,7 @@ export default function HeroLeft01() {
           transform: 'translateX(-50%)',
         }}
       >
-        HeroLeft01
+        
       </Typography>
     </TwoSidedLayout>
   );

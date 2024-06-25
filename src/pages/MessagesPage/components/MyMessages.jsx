@@ -12,13 +12,13 @@ export default function MyProfile() {
     <Sheet
       sx={{
         flex: 1,
-        width: '85dvw',
+        width: '100%',
         mx: 'auto',
         pt: { xs: 'var(--Header-height)', sm: 0 },
         display: 'grid',
         gridTemplateColumns: {
           xs: '1fr',
-          sm: 'minmax(min-content, min(100%, 90%)) 1fr',
+          sm: 'minmax(min-content, min(100dw, 100%)) 1fr',
         },
       }}
     >

@@ -69,7 +69,7 @@ export default function MessageInput(props) {
               </div>
               <Button
                 size="sm"
-                color="primary"
+                style={{backgroundColor: 'green'}}
                 sx={{ alignSelf: 'center', borderRadius: 'sm' }}
                 endDecorator={<SendRoundedIcon />}
                 onClick={handleClick}

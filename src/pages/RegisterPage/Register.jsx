@@ -19,6 +19,7 @@ import GoogleIcon from './GoogleIcon';
 import { IconButton } from '@mui/joy';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
+import SmartToy from '@mui/icons-material/SmartToy';
 
 function ColorSchemeToggle(props) {
   const { onClick, ...other } = props;
@@ -47,30 +48,30 @@ function ColorSchemeToggle(props) {
 export default function JoyRegisterSideTemplate() {
   const navigate = useNavigate()
 
-    async function handleSubmit(d) {
-        
-        const res = await fetch("http://localhost:8000/users/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                'name': d.name,
-                'email': d.email,
-                'password': d.password,
-                'favorites': []
-            })
-        })
-        const data = await res.json()
+  async function handleSubmit(d) {
+
+    const res = await fetch("http://localhost:8000/users/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        'name': d.name,
+        'email': d.email,
+        'password': d.password,
+        'favorites': []
+      })
+    })
+    const data = await res.json()
 
 
-        if (data.email) {
-            navigate("../login")
-        }
+    if (data.email) {
+      navigate("../login")
     }
+  }
 
-    const context = React.useContext(UserContext)
-    
+  const context = React.useContext(UserContext)
+
 
 
   return (
@@ -101,28 +102,28 @@ export default function JoyRegisterSideTemplate() {
         })}
       >
         <Box
-        sx={(theme) => ({
-          height: '100%',
-          position: 'fixed',
-          right: 0,
-          top: 0,
-          bottom: 0,
-          left: { xs: 0, md: '50vw' },
-          transition:
-            'background-image var(--Transition-duration), left var(--Transition-duration) !important',
-          transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
-          backgroundColor: 'background.level1',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundImage:
-            'url(https://images.unsplash.com/photo-1527181152855-fc03fc7949c8?auto=format&w=1000&dpr=2)',
-          [theme.getColorSchemeSelector('dark')]: {
+          sx={(theme) => ({
+            height: '100%',
+            position: 'fixed',
+            right: 0,
+            top: 0,
+            bottom: 0,
+            left: { xs: 0, md: '50vw' },
+            transition:
+              'background-image var(--Transition-duration), left var(--Transition-duration) !important',
+            transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
+            backgroundColor: 'background.level1',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
             backgroundImage:
-              'url(https://images.unsplash.com/photo-1572072393749-3ca9c8ea0831?auto=format&w=1000&dpr=2)',
-          },
-        })}
-      />
+              'url(https://images.unsplash.com/photo-1527181152855-fc03fc7949c8?auto=format&w=1000&dpr=2)',
+            [theme.getColorSchemeSelector('dark')]: {
+              backgroundImage:
+                'url(https://images.unsplash.com/photo-1572072393749-3ca9c8ea0831?auto=format&w=1000&dpr=2)',
+            },
+          })}
+        />
         <Box
           sx={{
             display: 'flex',
@@ -141,10 +142,13 @@ export default function JoyRegisterSideTemplate() {
             }}
           >
             <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
-              <IconButton variant="soft" color="primary" size="sm">
-                <BadgeRoundedIcon />
+              <IconButton variant="soft"  size="sm">
+                <Link color="secondary" href='home'>
+                  <SmartToy />
+                </Link>
+
               </IconButton>
-              <Typography level="title-lg">Company logo</Typography>
+              <Typography level="title-lg">Songify AI</Typography>
             </Box>
             <ColorSchemeToggle />
           </Box>
@@ -177,9 +181,9 @@ export default function JoyRegisterSideTemplate() {
                   Register
                 </Typography>
                 <Typography level="body-sm">
-                  New to company?{' '}
-                  <Link href="#replace-with-a-link" level="title-sm">
-                    Sign up!
+                  Already Have An Account?{' '}
+                  <Link href="login" level="title-sm">
+                    Sign in!
                   </Link>
                 </Typography>
               </Stack>
@@ -215,17 +219,17 @@ export default function JoyRegisterSideTemplate() {
                   handleSubmit(data)
                 }}
               >
-                <FormControl required>
+                <FormControl >
                   <FormLabel>Name</FormLabel>
                   <Input type="name" name="name" />
                 </FormControl>
-                <FormControl required>
+                <FormControl >
                   <FormLabel>Email</FormLabel>
-                  <Input type="email" name="email" />
+                  <Input type="text" name="email" />
                 </FormControl>
-                <FormControl required>
+                <FormControl >
                   <FormLabel>Password</FormLabel>
-                  <Input type="password" name="password" />
+                  <Input type="text" name="password" />
                 </FormControl>
                 <Stack gap={4} sx={{ mt: 2 }}>
                   <Box
@@ -236,7 +240,7 @@ export default function JoyRegisterSideTemplate() {
                     }}
                   >
                     <Checkbox size="sm" label="Remember me" name="persistent" />
-                    <Link level="title-sm" href="#replace-with-a-link">
+                    <Link level="title-sm" href="">
                       Forgot your password?
                     </Link>
                   </Box>
@@ -249,7 +253,7 @@ export default function JoyRegisterSideTemplate() {
           </Box>
           <Box component="footer" sx={{ py: 3 }}>
             <Typography level="body-xs" textAlign="center">
-              © Your company {new Date().getFullYear()}
+              © Songify AI {new Date().getFullYear()}
             </Typography>
           </Box>
         </Box>
@@ -266,14 +270,16 @@ export default function JoyRegisterSideTemplate() {
             'background-image var(--Transition-duration), left var(--Transition-duration) !important',
           transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
           backgroundColor: 'background.level1',
-          backgroundSize: 'cover',
+          backgroundSize: '',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
+          backgroundRepeat: 'repeat',
           backgroundImage:
-            'url(https://images.unsplash.com/photo-1527181152855-fc03fc7949c8?auto=format&w=1000&dpr=2)',
+            'url(https://www.logo.wine/a/logo/Spotify/Spotify-White-Dark-Background-Logo.wine.svg)',
           [theme.getColorSchemeSelector('dark')]: {
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
             backgroundImage:
-              'url(https://images.unsplash.com/photo-1572072393749-3ca9c8ea0831?auto=format&w=1000&dpr=2)',
+              'url(https://static.vecteezy.com/system/resources/previews/022/841/111/original/chatgpt-logo-transparent-background-free-png.png)',
           },
         })}
       />

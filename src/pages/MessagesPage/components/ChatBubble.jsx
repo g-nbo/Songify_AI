@@ -18,6 +18,10 @@ export default function ChatBubble(props) {
   const [isHovered, setIsHovered] = React.useState(false);
   const [isLiked, setIsLiked] = React.useState(false);
   const [isCelebrated, setIsCelebrated] = React.useState(false);
+
+  
+
+
   return (
     <Box sx={{ maxWidth: '40%', minWidth: 'auto' }}>
       <Stack
@@ -108,7 +112,7 @@ export default function ChatBubble(props) {
                 size="sm"
                 onClick={() => {
                   setIsLiked((prevState) => !prevState)}
-                  
+
                 }
                 
               >
