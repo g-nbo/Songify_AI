@@ -48,9 +48,10 @@ function ColorSchemeToggle(props) {
   );
 }
 
-export default function JoySignInSideTemplate() {
+export default function SignIn() {
   const navigate = useNavigate()
 
+  // When user submits sign-in page, send back credentials to compare, 
   async function handleSubmit(d) {
     
 
@@ -67,7 +68,7 @@ export default function JoySignInSideTemplate() {
 
     const data = await res.json()
     
-
+    // if response comes back good then let user log in and direct them to the messages page
     if (data) {
       localStorage.setItem('userId', JSON.stringify(data))
       navigate('../messages')
@@ -122,7 +123,7 @@ export default function JoySignInSideTemplate() {
           >
             <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
               <IconButton variant="soft" size="sm">
-              <Link color="secondary" href='home'>
+              <Link color="secondary" href='/'>
                   <SmartToy />
                 </Link>
               </IconButton>

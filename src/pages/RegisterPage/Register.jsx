@@ -48,6 +48,8 @@ function ColorSchemeToggle(props) {
 export default function JoyRegisterSideTemplate() {
   const navigate = useNavigate()
 
+
+  // When user submits registration take info and submit to back-end if it fits our schema
   async function handleSubmit(d) {
 
     const res = await fetch("http://localhost:8000/users/register", {
@@ -64,7 +66,7 @@ export default function JoyRegisterSideTemplate() {
     })
     const data = await res.json()
 
-
+    // If it went through send users to login page to login with their new credentials
     if (data.email) {
       navigate("../login")
     }
@@ -143,7 +145,7 @@ export default function JoyRegisterSideTemplate() {
           >
             <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
               <IconButton variant="soft"  size="sm">
-                <Link color="secondary" href='home'>
+                <Link color="secondary" href='/'>
                   <SmartToy />
                 </Link>
 
@@ -178,7 +180,7 @@ export default function JoyRegisterSideTemplate() {
             <Stack gap={4} sx={{ mb: 2 }}>
               <Stack gap={1}>
                 <Typography component="h1" level="h3">
-                  Register
+                  Sign Up
                 </Typography>
                 <Typography level="body-sm">
                   Already Have An Account?{' '}
@@ -245,7 +247,7 @@ export default function JoyRegisterSideTemplate() {
                     </Link>
                   </Box>
                   <Button type="submit" fullWidth>
-                    Sign in
+                    Sign Up
                   </Button>
                 </Stack>
               </form>

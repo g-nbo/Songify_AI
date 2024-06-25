@@ -10,7 +10,7 @@ function SongCard(props) {
     // When user clicks favorite
     async function handleFavorite() {
 
-        
+
         const res = await fetch('http://localhost:8000/songify/favorite', {
             method: "POST",
             headers: {
@@ -23,7 +23,7 @@ function SongCard(props) {
         })
 
         const data = await res.json()
-        
+
 
         // Reflect db changes in local storage for users view
         const user = JSON.parse(localStorage.getItem("userId"))
@@ -36,7 +36,7 @@ function SongCard(props) {
     // When user clicks unfavorite
     async function handleDeleteFav() {
 
-        
+
         const res = await fetch('http://localhost:8000/songify/favorite/delete', {
             method: "DELETE",
             headers: {
@@ -49,7 +49,7 @@ function SongCard(props) {
         })
 
         const data = await res.json()
-        
+
 
         // Reflect db changes in local storage for users view
         const user = JSON.parse(localStorage.getItem("userId"))
@@ -72,9 +72,12 @@ function SongCard(props) {
                 props.songId ?
                     <>
                         <p>{props.songExplanation}</p>
-                        <iframe style={{ "borderRadius": "12px" }} src={src} width="100%" height="152" frameBorder="0" allowFullScreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                        <button onClick={() => handleFavorite(props.songId)}>Favorite</button>
-                        <button onClick={() => handleDeleteFav(props.songId)}>Unfavorite</button>
+                        <iframe style={{ "borderRadius": "13px" }} src={src} width="100%" height="152" frameBorder="0" allowFullScreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                        <div>
+                            <button onClick={() => handleFavorite(props.songId)}>Favorite</button>
+                            <button onClick={() => handleDeleteFav(props.songId)}>Unfavorite</button>
+                        </div>
+
                     </> :
                     <p>Something Went Wrong...</p>
             }

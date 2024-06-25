@@ -20,7 +20,7 @@ export default function HeroLeft01() {
         Explore New Sounds
       </Typography>
       <Typography fontSize="lg" textColor="text.secondary" lineHeight="lg">
-        Discover the Perfect Soundtrack for You – Instant, Personalized Music Recommendations Powered by AI!
+        Discover the Perfect Soundtrack for You – <br /> Personalized Music Recommendations Powered by AI
       </Typography>
       <Link href="messages">
         <Button style={{backgroundColor: "lime"}} size="lg" endDecorator={<ArrowForward fontSize="xl" />}>

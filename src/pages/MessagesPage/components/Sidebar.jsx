@@ -130,7 +130,7 @@ export default function Sidebar() {
       />
       <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
         <IconButton variant="soft" size="md">
-          <Link color="secondary" href='home'>
+          <Link color="secondary" href='/'>
             <SmartToyIcon />
           </Link>
 

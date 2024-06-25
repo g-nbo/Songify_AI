@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
-import MusicPage from './pages/MusicPage'
-import HomePage from './pages/HomePage'
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
 import UserContext from './context/UserContext'
 import FavoritesPage from './pages/FavoritesPage/FavoritesPage'
 import JoyMessagesTemplate from './pages/MessagesPage/Messages'
-import JoySignInSideTemplate from './pages/SignInPage/SignIn'
+import SignIn from './pages/SignInPage/SignIn'
 import JoyRegisterSideTemplate from './pages/RegisterPage/Register'
 import Home from './pages/HomePage/Home'
 
@@ -24,13 +20,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/'>
-            <Route index element={<HomePage />} />
-            <Route path='login' element={<JoySignInSideTemplate setUser={setUser} />} />
+            <Route index element={<Home />} />
+            <Route path='login' element={<SignIn setUser={setUser} />} />
             <Route path='register' element={<JoyRegisterSideTemplate />} />
-            <Route path='music' element={<MusicPage />} />
             <Route path='favorites' element={<FavoritesPage />} />
             <Route path='messages' element={<JoyMessagesTemplate />} />
-            <Route path='home' element={<Home />} />
           </Route>
         </Routes>
       </BrowserRouter >
