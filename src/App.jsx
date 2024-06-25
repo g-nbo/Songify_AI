@@ -10,6 +10,7 @@ import FavoritesPage from './pages/FavoritesPage'
 import JoyMessagesTemplate from './pages/MessagesPage/Messages'
 import JoySignInSideTemplate from './pages/SignInPage/SignIn'
 import JoyRegisterSideTemplate from './pages/RegisterPage/Register'
+import Home from './pages/HomePage/Home'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -28,7 +29,8 @@ function App() {
             <Route path='register' element={<JoyRegisterSideTemplate />} />
             <Route path='music' element={<MusicPage />} />
             <Route path='favorites' element={<FavoritesPage />} />
-            <Route path='landing' element={<JoyMessagesTemplate />} />
+            <Route path='messages' element={<JoyMessagesTemplate />} />
+            <Route path='home' element={<Home />} />
           </Route>
         </Routes>
       </BrowserRouter >

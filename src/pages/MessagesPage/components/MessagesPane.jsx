@@ -40,11 +40,7 @@ export default function MessagesPane(props) {
         const spotifyData = await spotifyRes.json();
         const newSong = spotifyData
 
-        console.log(newSong)
-
         setReccSong(newSong)
-
-        console.log(reccSong)
 
         setChatMessages([
           ...chatMessages,

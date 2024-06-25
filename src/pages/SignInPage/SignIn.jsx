@@ -69,7 +69,7 @@ export default function JoySignInSideTemplate() {
 
     if (data) {
       localStorage.setItem('userId', JSON.stringify(data))
-      navigate('../landing')
+      navigate('../messages')
     }
 
 
