@@ -2,8 +2,8 @@ const date = new Date()
 
 export const users = [
   {
-    name: 'Songify',
-    username: '@SongifyAI',
+    name: 'GPT',
+    username: '@OpenAI',
     avatar: '/static/images/avatar/2.jpg',
     online: true,
   }

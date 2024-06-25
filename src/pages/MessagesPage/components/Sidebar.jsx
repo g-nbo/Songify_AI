@@ -112,7 +112,7 @@ export default function Sidebar() {
         <IconButton variant="soft" color="primary" size="sm">
           <BrightnessAutoRoundedIcon />
         </IconButton>
-        <Typography level="title-lg">Acme Co.</Typography>
+        <Typography level="title-lg">SongifyAI</Typography>
         <ColorSchemeToggle sx={{ ml: 'auto' }} />
       </Box>
       <Input size="sm" startDecorator={<SearchRoundedIcon />} placeholder="Search" />
@@ -137,7 +137,11 @@ export default function Sidebar() {
           }}
         >
           <ListItem>
-            <ListItemButton>
+            <ListItemButton
+            role="menuitem"
+            component="a"
+            href="home"
+            >
               <HomeRoundedIcon />
               <ListItemContent>
                 <Typography level="title-sm">Home</Typography>
@@ -145,55 +149,18 @@ export default function Sidebar() {
             </ListItemButton>
           </ListItem>
           <ListItem>
-            <ListItemButton>
-              <DashboardRoundedIcon />
-              <ListItemContent>
-                <Typography level="title-sm">Dashboard</Typography>
-              </ListItemContent>
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
             <ListItemButton
               role="menuitem"
               component="a"
-              href="/joy-ui/getting-started/templates/order-dashboard/"
+              href="favorites"
             >
               <ShoppingCartRoundedIcon />
               <ListItemContent>
-                <Typography level="title-sm">Orders</Typography>
+                <Typography level="title-sm">Favorites</Typography>
               </ListItemContent>
             </ListItemButton>
           </ListItem>
-          <ListItem nested>
-            <Toggler
-              renderToggle={({ open, setOpen }) => (
-                <ListItemButton onClick={() => setOpen(!open)}>
-                  <AssignmentRoundedIcon />
-                  <ListItemContent>
-                    <Typography level="title-sm">Tasks</Typography>
-                  </ListItemContent>
-                  <KeyboardArrowDownIcon
-                    sx={{ transform: open ? 'rotate(180deg)' : 'none' }}
-                  />
-                </ListItemButton>
-              )}
-            >
-              <List sx={{ gap: 0.5 }}>
-                <ListItem sx={{ mt: 0.5 }}>
-                  <ListItemButton>All tasks</ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton>Backlog</ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton>In progress</ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton>Done</ListItemButton>
-                </ListItem>
-              </List>
-            </Toggler>
-          </ListItem>
+
           <ListItem>
             <ListItemButton selected>
               <QuestionAnswerRoundedIcon />
@@ -205,39 +172,33 @@ export default function Sidebar() {
               </Chip>
             </ListItemButton>
           </ListItem>
-          <ListItem nested>
-            <Toggler
-              renderToggle={({ open, setOpen }) => (
-                <ListItemButton onClick={() => setOpen(!open)}>
-                  <GroupRoundedIcon />
-                  <ListItemContent>
-                    <Typography level="title-sm">Users</Typography>
-                  </ListItemContent>
-                  <KeyboardArrowDownIcon
-                    sx={{ transform: open ? 'rotate(180deg)' : 'none' }}
-                  />
-                </ListItemButton>
-              )}
+
+          <ListItem>
+            <ListItemButton
+            role="menuitem"
+            component="a"
+            href="login"
             >
-              <List sx={{ gap: 0.5 }}>
-                <ListItem sx={{ mt: 0.5 }}>
-                  <ListItemButton
-                    role="menuitem"
-                    component="a"
-                    href="/joy-ui/getting-started/templates/profile-dashboard/"
-                  >
-                    My profile
-                  </ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton>Create a new user</ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton>Roles & permission</ListItemButton>
-                </ListItem>
-              </List>
-            </Toggler>
+              <DashboardRoundedIcon />
+              <ListItemContent>
+                <Typography level="title-sm">Login</Typography>
+              </ListItemContent>
+            </ListItemButton>
           </ListItem>
+          <ListItem>
+            <ListItemButton
+              role="menuitem"
+              component="a"
+              href="register"
+            >
+              <ShoppingCartRoundedIcon />
+              <ListItemContent>
+                <Typography level="title-sm">Register</Typography>
+              </ListItemContent>
+            </ListItemButton>
+          </ListItem>
+
+          
         </List>
         <List
           size="sm"
@@ -265,20 +226,20 @@ export default function Sidebar() {
         <Card
           invertedColors
           variant="soft"
-          color="warning"
+          color="success"
           size="sm"
           sx={{ boxShadow: 'none' }}
         >
           <Stack direction="row" justifyContent="space-between" alignItems="center">
-            <Typography level="title-sm">Used space</Typography>
+            <Typography level="title-sm">Free Plan</Typography>
             <IconButton size="sm">
               <CloseRoundedIcon />
             </IconButton>
           </Stack>
           <Typography level="body-xs">
-            Your team has used 80% of your available space. Need more?
+            You have used 60% of your free plan. Need more time to craft your perfect playlist?
           </Typography>
-          <LinearProgress variant="outlined" value={80} determinate sx={{ my: 1 }} />
+          <LinearProgress variant="outlined" value={60} determinate sx={{ my: 1 }} />
           <Button size="sm" variant="solid">
             Upgrade plan
           </Button>

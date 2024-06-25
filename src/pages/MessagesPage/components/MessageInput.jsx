@@ -30,6 +30,12 @@ export default function MessageInput(props) {
           ref={textAreaRef}
           onChange={(e) => {
             setTextAreaValue(e.target.value);
+
+            if(e.nativeEvent.inputType === 'insertLineBreak') {
+              handleClick()
+            }
+            
+
           }}
           value={textAreaValue}
           minRows={3}

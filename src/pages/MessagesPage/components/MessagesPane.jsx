@@ -52,7 +52,7 @@ export default function MessagesPane(props) {
           },
           {
             id: newIdString + 1,
-            sender: '@SongifyAI',
+            sender: '@OpenAI',
             content: <SongCard key={newId} songId={newSong[1]} songExplanation={newSong[0]} />,
             timestamp: 'Just Now',
           }

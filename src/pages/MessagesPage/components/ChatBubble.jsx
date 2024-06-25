@@ -19,7 +19,7 @@ export default function ChatBubble(props) {
   const [isLiked, setIsLiked] = React.useState(false);
   const [isCelebrated, setIsCelebrated] = React.useState(false);
   return (
-    <Box sx={{ maxWidth: '60%', minWidth: 'auto' }}>
+    <Box sx={{ maxWidth: '40%', minWidth: 'auto' }}>
       <Stack
         direction="row"
         justifyContent="space-between"
@@ -106,7 +106,11 @@ export default function ChatBubble(props) {
                 variant={isLiked ? 'soft' : 'plain'}
                 color={isLiked ? 'danger' : 'neutral'}
                 size="sm"
-                onClick={() => setIsLiked((prevState) => !prevState)}
+                onClick={() => {
+                  setIsLiked((prevState) => !prevState)}
+                  
+                }
+                
               >
                 {isLiked ? '❤️' : <FavoriteBorderIcon />}
               </IconButton>

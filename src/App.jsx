@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { BrowserRouter, Routes, Route} from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
 import MusicPage from './pages/MusicPage'
 import HomePage from './pages/HomePage'
@@ -15,12 +15,12 @@ import Home from './pages/HomePage/Home'
 function App() {
   const [count, setCount] = useState(0)
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('userId')))
-  
-  
+
+
 
   return (
-    
-    <UserContext.Provider value={{"user": user}}>
+
+    <UserContext.Provider value={{ "user": user }}>
       <BrowserRouter>
         <Routes>
           <Route path='/'>

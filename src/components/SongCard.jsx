@@ -4,13 +4,13 @@ import UserContext from "../context/UserContext";
 
 function SongCard(props) {
     const context = useContext(UserContext)
-    const [buttonClicked, setButtonClicked] = useState(false)
+    
 
 
     // When user clicks favorite
     async function handleFavorite() {
 
-        setButtonClicked(!buttonClicked)
+        
         const res = await fetch('http://localhost:8000/songify/favorite', {
             method: "POST",
             headers: {
@@ -76,7 +76,7 @@ function SongCard(props) {
                         <button onClick={() => handleFavorite(props.songId)}>Favorite</button>
                         <button onClick={() => handleDeleteFav(props.songId)}>Unfavorite</button>
                     </> :
-                    <p>Something Went Wrong!</p>
+                    <p>Something Went Wrong...</p>
             }
 
         </>
