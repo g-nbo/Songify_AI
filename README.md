@@ -7,6 +7,13 @@ Start on our homepage where you can sign in, or jump right in by sending a messa
 
 Dive into the world of Songify AI and transform your music experience today!
 
+### Links
+- [ View Site Here ] <https://stellular-brigadeiros-3e8af3.netlify.app>
+- [Front-end Github ] <https://github.com/g-nbo/Nobles_Gabriel_SongifyAI_Capstone>
+- [Back-end Deployed ] <https://songify-ai-backend.onrender.com>
+- [Back-end Github ] <https://github.com/g-nbo/songify_AI_backend>
+
+
 ##### Technologies Used:
 - JavaScript ( Scripting language that enables us to create dynamically updating content. )
 - React ( Free and open-source front-end JavaScript library for building user interfaces based on components. )
@@ -16,7 +23,7 @@ Dive into the world of Songify AI and transform your music experience today!
 - MongoDB ( Document-based NoSQL database that stores data in BSON (JSON-like) format. )
 - Vite ( Local development server. )
 - Material UI ( Open-source React component library that implements Google's Material Design. )
-- Joy UI ( An open-source React component library, for a clean and modern UI. )
+- Joy UI ( An open-source React component library that follows a lightly opinionated design direction, for a clean and modern UI. )
 - Emotion ( Performant and flexible CSS-in-JS library. )
 - HTML ( Defines the content and structure of web content. )
 - CSS ( Style sheet language used for specifying the presentation and styling. )
