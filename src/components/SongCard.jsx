@@ -71,7 +71,11 @@ function SongCard(props) {
                 props.songId ?
                     <>
                         <span>{props.songExplanation}</span>
+                        <br />
+                        <br />
                         <iframe style={{ "borderRadius": "13px" }} src={src} width="100%" height="152" frameBorder="0" allowFullScreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                        <br />
+                        <br />
                         <span>
                             <button onClick={() => handleFavorite(props.songId)}>Favorite</button>
                             <button onClick={() => handleDeleteFav(props.songId)}>Unfavorite</button>

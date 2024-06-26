@@ -54,12 +54,12 @@ export default function MessagesPane(props) {
           },
           {
             id: newIdString + 1,
-            sender: '@SongifyAI',
+            sender: chat.sender,
             content: <SongCard key={newId} songId={newSong[1]} songExplanation={newSong[0]} />,
             timestamp: 'Just Now',
           }
         ]);
-
+        console.log(chat)
 
       } else {
         console.log("Err: no message")
