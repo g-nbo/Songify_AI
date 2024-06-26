@@ -13,7 +13,7 @@ export default function TwoSidedLayout({
     <Container
       sx={(theme) => ({
         position: 'relative',
-        minHeight: '100vh',
+        minHeight: '100dvh',
         display: 'flex',
         flexDirection: reversed ? 'column-reverse' : 'column',
         alignItems: 'center',

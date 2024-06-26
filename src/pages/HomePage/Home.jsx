@@ -54,8 +54,8 @@ export default function TeamExample() {
       <ColorSchemeToggle />
       <Box
         sx={{
-          height: '100vh',
-          overflowY: 'scroll',
+          height: '100dvh',
+          overflowY: '',
           scrollSnapType: 'y mandatory',
           '& > div': {
             scrollSnapAlign: 'start',
