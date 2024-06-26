@@ -4,14 +4,13 @@ import UserContext from "../context/UserContext";
 
 function SongCard(props) {
     const context = useContext(UserContext)
-    console.log(props.songId)
 
 
     // When user clicks favorite
     async function handleFavorite() {
 
 
-        const res = await fetch('http://localhost:8000/songify/favorite', {
+        const res = await fetch('https://songify-ai-backend.onrender.com/songify/favorite', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -37,7 +36,7 @@ function SongCard(props) {
     async function handleDeleteFav() {
 
 
-        const res = await fetch('http://localhost:8000/songify/favorite/delete', {
+        const res = await fetch('https://songify-ai-backend.onrender.com/songify/favorite/delete', {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json'
@@ -71,12 +70,12 @@ function SongCard(props) {
             {
                 props.songId ?
                     <>
-                        <p>{props.songExplanation}</p>
+                        <span>{props.songExplanation}</span>
                         <iframe style={{ "borderRadius": "13px" }} src={src} width="100%" height="152" frameBorder="0" allowFullScreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                        <div>
+                        <span>
                             <button onClick={() => handleFavorite(props.songId)}>Favorite</button>
                             <button onClick={() => handleDeleteFav(props.songId)}>Unfavorite</button>
-                        </div>
+                        </span>
 
                     </> :
                     <p>Something Went Wrong...</p>

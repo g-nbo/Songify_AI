@@ -52,7 +52,7 @@ export default function JoyRegisterSideTemplate() {
   // When user submits registration take info and submit to back-end if it fits our schema
   async function handleSubmit(d) {
 
-    const res = await fetch("http://localhost:8000/users/register", {
+    const res = await fetch("https://songify-ai-backend.onrender.com/users/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

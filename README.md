@@ -16,7 +16,7 @@ Dive into the world of Songify AI and transform your music experience today!
 - MongoDB ( Document-based NoSQL database that stores data in BSON (JSON-like) format. )
 - Vite ( Local development server. )
 - Material UI ( Open-source React component library that implements Google's Material Design. )
-- Joy UI ( An open-source React component library that follows a lightly opinionated design direction, for a clean and modern UI. )
+- Joy UI ( An open-source React component library, for a clean and modern UI. )
 - Emotion ( Performant and flexible CSS-in-JS library. )
 - HTML ( Defines the content and structure of web content. )
 - CSS ( Style sheet language used for specifying the presentation and styling. )

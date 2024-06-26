@@ -28,7 +28,7 @@ export default function MessagesPane(props) {
 
       // Send back end our users message so gpt can respond with a song recommendation
       if (textAreaValue) {
-        const spotifyRes = await fetch("http://localhost:8000/songify/song", {
+        const spotifyRes = await fetch("https://songify-ai-backend.onrender.com/songify/song", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"

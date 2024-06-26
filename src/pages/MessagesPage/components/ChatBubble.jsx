@@ -23,7 +23,7 @@ export default function ChatBubble(props) {
 
 
   return (
-    <Box sx={{ maxWidth: '40%', minWidth: 'auto' }}>
+    <Box sx={{ maxWidth: '50%', minWidth: 'auto' }}>
       <Stack
         direction="row"
         justifyContent="space-between"
