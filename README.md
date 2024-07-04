@@ -8,8 +8,8 @@ Start on our homepage where you can sign in, or jump right in by sending a messa
 Dive into the world of Songify AI and transform your music experience today!
 
 ### Links
-- [ View Site Here ] <https://stellular-brigadeiros-3e8af3.netlify.app>
-- [Front-end Github ] <https://github.com/g-nbo/Nobles_Gabriel_SongifyAI_Capstone>
+- [ View Site Here ] <https://songifyai.netlify.app/>
+- [Front-end Github ] <https://github.com/g-nbo/Songify_AI>
 - [Back-end Deployed ] <https://songify-ai-backend.onrender.com>
 - [Back-end Github ] <https://github.com/g-nbo/songify_AI_backend>
 
