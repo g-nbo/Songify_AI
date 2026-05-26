@@ -40,6 +40,7 @@ import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '../utils';
 import { useNavigate } from 'react-router-dom';
 import Login from '@mui/icons-material/Login';
+import { useUser } from '../../../context/UserContext';
 
 
 
@@ -67,13 +68,11 @@ function Toggler(props) {
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const { logout, user } = useUser();
 
-  function logout() {
-    localStorage.getItem("userId") ?
-      navigate('/') :
-      console.log("cant logout if you're not logged in")
-
-    localStorage.removeItem("userId")
+  async function handleLogout() {
+    await logout();
+    navigate('/');
   }
 
   return (
@@ -276,10 +275,10 @@ export default function Sidebar() {
           src=""
         />
         <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography level="title-sm">User</Typography>
-          <Typography level="body-xs">User@User.com</Typography>
+          <Typography level="title-sm">{user?.name ?? ''}</Typography>
+          <Typography level="body-xs">{user?.email ?? ''}</Typography>
         </Box>
-        <IconButton onClick={() => logout()} size="sm" variant="plain" color="neutral">
+        <IconButton onClick={handleLogout} size="sm" variant="plain" color="neutral">
           <LogoutRoundedIcon />
         </IconButton>
       </Box>

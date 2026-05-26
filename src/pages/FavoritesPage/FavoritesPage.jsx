@@ -1,61 +1,33 @@
-import UserContext from "../../context/UserContext";
-import { useContext, useEffect, useState } from "react";
+import { useUser } from "../../context/UserContext";
 import SongCard from "../../components/SongCard";
-import './favorites.css'
+import './favorites.css';
 import HomeRounded from "@mui/icons-material/HomeRounded";
 import { Link } from "@mui/material";
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 
-
-
 function FavoritesPage() {
-
-    const context = useContext(UserContext)
-
-
-
-
+    const { user } = useUser();
 
     return (
         <div id="favorites">
             <br />
             <div>
-            <Link href='/' color="primary">
-                <HomeRounded />
-            </Link>
-            <Link href='messages' color="primary">
-                <QuestionAnswerIcon />
-            </Link>
-            
+                <Link href='/' color="primary"><HomeRounded /></Link>
+                <Link href='messages' color="primary"><QuestionAnswerIcon /></Link>
             </div>
-
-            {
-                context.user ?
-                    <>
-                        {/* For Each Favorite that the user has create a song card for them to see */}
-                        <h1>{context.user.name}'s Favorites:</h1>
-                        {
-                            context.user.favorites.map((f, i) => {
-                                return <SongCard key={i} songId={f} />
-                            })
-                        }
-                    </> :
-                    <h1>No Favorites Found</h1>
+            <h1>{user.name}'s Favorites:</h1>
+            {user.favorites.length > 0
+                ? user.favorites.map((f, i) => <SongCard key={i} songId={f} />)
+                : <p>No favorites yet — go find some songs!</p>
             }
             <br />
             <div>
-            <Link href='/' color="primary">
-                <HomeRounded />
-            </Link>
-            <Link href='messages' color="primary">
-                <QuestionAnswerIcon />
-            </Link>
-            
+                <Link href='/' color="primary"><HomeRounded /></Link>
+                <Link href='messages' color="primary"><QuestionAnswerIcon /></Link>
             </div>
             <br />
-            
-        </ div>
-    )
+        </div>
+    );
 }
 
-export default FavoritesPage
+export default FavoritesPage;

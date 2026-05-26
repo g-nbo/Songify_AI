@@ -7,16 +7,16 @@ import ChatBubble from './ChatBubble';
 import MessageInput from './MessageInput';
 import MessagesPaneHeader from './MessagesPaneHeader';
 import SongCard from '../../../components/SongCard';
+import { useUser } from '../../../context/UserContext';
 
 
 
 export default function MessagesPane(props) {
   const { chat } = props;
+  const { accessToken } = useUser();
   const [chatMessages, setChatMessages] = React.useState(chat.messages);
   const [textAreaValue, setTextAreaValue] = React.useState('');
-
   const [reccSong, setReccSong] = React.useState([])
-  const [songCounter, setSongCounter] = React.useState([0])
   
   
   async function handleSubmit() {
@@ -25,11 +25,13 @@ export default function MessagesPane(props) {
 
     try {
       if (textAreaValue) {
-        const spotifyRes = await fetch("https://songify-ai-backend.onrender.com/songify/song", {
-          method: "POST",
+        const spotifyRes = await fetch(`${import.meta.env.VITE_API_URL}/songify/song`, {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`,
           },
+          credentials: 'include',
           body: JSON.stringify({
             "message": textAreaValue,
           })
