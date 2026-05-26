@@ -12,13 +12,13 @@ import Link from '@mui/joy/Link';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
+import Alert from '@mui/joy/Alert';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
-import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
-import GoogleIcon from './GoogleIcon';
 import { IconButton } from '@mui/joy';
 import { useNavigate } from 'react-router-dom';
 import SmartToy from '@mui/icons-material/SmartToy';
+import { useUser } from '../../context/UserContext';
 
 function ColorSchemeToggle(props) {
   const { onClick, ...other } = props;
@@ -26,10 +26,6 @@ function ColorSchemeToggle(props) {
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => setMounted(true), []);
-
-  
-
-
 
   return (
     <IconButton
@@ -49,28 +45,36 @@ function ColorSchemeToggle(props) {
 }
 
 export default function SignIn() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { login } = useUser();
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState('');
 
   async function handleSubmit(d) {
-    const res = await fetch("https://songify-ai-backend.onrender.com/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        'email': d.email,
-        'password': d.password,
-      })
-    })
+    setIsLoading(true);
+    setError('');
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/users/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email: d.email, password: d.password }),
+      });
 
-    const data = await res.json()
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        setError(err.message || 'Invalid email or password');
+        return;
+      }
 
-    if (data) {
-      localStorage.setItem('userId', JSON.stringify(data))
-      navigate('../messages')
+      const data = await res.json();
+      login(data.user, data.accessToken);
+      navigate('/messages');
+    } catch {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
-
-
   }
 
   return (
@@ -80,7 +84,7 @@ export default function SignIn() {
         styles={{
           ':root': {
             '--Form-maxWidth': '800px',
-            '--Transition-duration': '0.4s', // set to `none` to disable transition
+            '--Transition-duration': '0.4s',
           },
         }}
       />
@@ -111,15 +115,11 @@ export default function SignIn() {
         >
           <Box
             component="header"
-            sx={{
-              py: 3,
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
+            sx={{ py: 3, display: 'flex', justifyContent: 'space-between' }}
           >
             <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
               <IconButton variant="soft" size="sm">
-              <Link color="secondary" href='/'>
+                <Link color="secondary" href='/'>
                   <SmartToy />
                 </Link>
               </IconButton>
@@ -140,36 +140,18 @@ export default function SignIn() {
               maxWidth: '100%',
               mx: 'auto',
               borderRadius: 'sm',
-              '& form': {
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 2,
-              },
-              [`& .MuiFormLabel-asterisk`]: {
-                visibility: 'hidden',
-              },
+              '& form': { display: 'flex', flexDirection: 'column', gap: 2 },
+              [`& .MuiFormLabel-asterisk`]: { visibility: 'hidden' },
             }}
           >
             <Stack gap={4} sx={{ mb: 2 }}>
               <Stack gap={1}>
-                <Typography component="h1" level="h3">
-                  Sign in
-                </Typography>
+                <Typography component="h1" level="h3">Sign in</Typography>
                 <Typography level="body-sm">
                   Don't Have An Account?{' '}
-                  <Link href="register" level="title-sm">
-                    Sign up!
-                  </Link>
+                  <Link href="register" level="title-sm">Sign up!</Link>
                 </Typography>
               </Stack>
-              <Button
-                variant="soft"
-                color="neutral"
-                fullWidth
-                startDecorator={<GoogleIcon />}
-              >
-                Continue with Google
-              </Button>
             </Stack>
             <Divider
               sx={(theme) => ({
@@ -177,44 +159,33 @@ export default function SignIn() {
                   color: { xs: '#FFF', md: 'text.tertiary' },
                 },
               })}
-            >
-              or
-            </Divider>
+            />
+            {error && <Alert color="danger" variant="soft">{error}</Alert>}
             <Stack gap={4} sx={{ mt: 2 }}>
               <form
                 onSubmit={(event) => {
                   event.preventDefault();
                   const formElements = event.currentTarget.elements;
-                  const data = {
+                  handleSubmit({
                     email: formElements.email.value,
                     password: formElements.password.value,
                     persistent: formElements.persistent.checked,
-                  };
-                  handleSubmit(data);
+                  });
                 }}
               >
-                <FormControl >
+                <FormControl>
                   <FormLabel>Email</FormLabel>
-                  <Input type="text" name="email" />
+                  <Input type="email" name="email" required />
                 </FormControl>
-                <FormControl >
+                <FormControl>
                   <FormLabel>Password</FormLabel>
-                  <Input type="password" name="password" />
+                  <Input type="password" name="password" required />
                 </FormControl>
                 <Stack gap={4} sx={{ mt: 2 }}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Checkbox size="sm" label="Remember me" name="persistent" />
-                    <Link level="title-sm" href="login">
-                      Forgot your password?
-                    </Link>
                   </Box>
-                  <Button type="submit" fullWidth>
+                  <Button type="submit" fullWidth loading={isLoading}>
                     Sign in
                   </Button>
                 </Stack>
@@ -236,8 +207,7 @@ export default function SignIn() {
           top: 0,
           bottom: 0,
           left: { xs: 0, md: '50vw' },
-          transition:
-            'background-image var(--Transition-duration), left var(--Transition-duration) !important',
+          transition: 'background-image var(--Transition-duration), left var(--Transition-duration) !important',
           transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
           backgroundColor: 'background.level1',
           backgroundSize: 'cover',

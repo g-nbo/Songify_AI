@@ -12,13 +12,11 @@ import Link from '@mui/joy/Link';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
+import Alert from '@mui/joy/Alert';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
-import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
-import GoogleIcon from './GoogleIcon';
 import { IconButton } from '@mui/joy';
 import { useNavigate } from 'react-router-dom';
-import UserContext from '../../context/UserContext';
 import SmartToy from '@mui/icons-material/SmartToy';
 
 function ColorSchemeToggle(props) {
@@ -46,32 +44,34 @@ function ColorSchemeToggle(props) {
 }
 
 export default function JoyRegisterSideTemplate() {
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState('');
 
   async function handleSubmit(d) {
-    const res = await fetch("https://songify-ai-backend.onrender.com/users/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        'name': d.name,
-        'email': d.email,
-        'password': d.password,
-        'favorites': []
-      })
-    })
-    const data = await res.json()
+    setIsLoading(true);
+    setError('');
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/users/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ name: d.name, email: d.email, password: d.password, favorites: [] }),
+      });
 
-    if (data.email) {
-      navigate("../login")
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        setError(err.message || 'Registration failed. Please try again.');
+        return;
+      }
+
+      navigate('/login');
+    } catch {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   }
-
-  const context = React.useContext(UserContext)
-
-
 
   return (
     <CssVarsProvider defaultMode="dark" disableTransitionOnChange>
@@ -80,7 +80,7 @@ export default function JoyRegisterSideTemplate() {
         styles={{
           ':root': {
             '--Form-maxWidth': '800px',
-            '--Transition-duration': '0.4s', // set to `none` to disable transition
+            '--Transition-duration': '0.4s',
           },
         }}
       />
@@ -108,8 +108,7 @@ export default function JoyRegisterSideTemplate() {
             top: 0,
             bottom: 0,
             left: { xs: 0, md: '50vw' },
-            transition:
-              'background-image var(--Transition-duration), left var(--Transition-duration) !important',
+            transition: 'background-image var(--Transition-duration), left var(--Transition-duration) !important',
             transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
             backgroundColor: 'background.level1',
             backgroundSize: 'cover',
@@ -134,18 +133,13 @@ export default function JoyRegisterSideTemplate() {
         >
           <Box
             component="header"
-            sx={{
-              py: 3,
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
+            sx={{ py: 3, display: 'flex', justifyContent: 'space-between' }}
           >
             <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
-              <IconButton variant="soft"  size="sm">
+              <IconButton variant="soft" size="sm">
                 <Link color="secondary" href='/'>
                   <SmartToy />
                 </Link>
-
               </IconButton>
               <Typography level="title-lg">Songify AI</Typography>
             </Box>
@@ -164,36 +158,18 @@ export default function JoyRegisterSideTemplate() {
               maxWidth: '100%',
               mx: 'auto',
               borderRadius: 'sm',
-              '& form': {
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 2,
-              },
-              [`& .MuiFormLabel-asterisk`]: {
-                visibility: 'hidden',
-              },
+              '& form': { display: 'flex', flexDirection: 'column', gap: 2 },
+              [`& .MuiFormLabel-asterisk`]: { visibility: 'hidden' },
             }}
           >
             <Stack gap={4} sx={{ mb: 2 }}>
               <Stack gap={1}>
-                <Typography component="h1" level="h3">
-                  Sign Up
-                </Typography>
+                <Typography component="h1" level="h3">Sign Up</Typography>
                 <Typography level="body-sm">
                   Already Have An Account?{' '}
-                  <Link href="login" level="title-sm">
-                    Sign in!
-                  </Link>
+                  <Link href="login" level="title-sm">Sign in!</Link>
                 </Typography>
               </Stack>
-              <Button
-                variant="soft"
-                color="neutral"
-                fullWidth
-                startDecorator={<GoogleIcon />}
-              >
-                Continue with Google
-              </Button>
             </Stack>
             <Divider
               sx={(theme) => ({
@@ -201,49 +177,38 @@ export default function JoyRegisterSideTemplate() {
                   color: { xs: '#FFF', md: 'text.tertiary' },
                 },
               })}
-            >
-              or
-            </Divider>
+            />
+            {error && <Alert color="danger" variant="soft">{error}</Alert>}
             <Stack gap={4} sx={{ mt: 2 }}>
               <form
                 onSubmit={(event) => {
                   event.preventDefault();
                   const formElements = event.currentTarget.elements;
-                  const data = {
+                  handleSubmit({
                     name: formElements.name.value,
                     email: formElements.email.value,
                     password: formElements.password.value,
                     persistent: formElements.persistent.checked,
-                  };
-                  handleSubmit(data)
+                  });
                 }}
               >
-                <FormControl >
+                <FormControl>
                   <FormLabel>Name</FormLabel>
-                  <Input type="name" name="name" />
+                  <Input type="text" name="name" required />
                 </FormControl>
-                <FormControl >
+                <FormControl>
                   <FormLabel>Email</FormLabel>
-                  <Input type="text" name="email" />
+                  <Input type="email" name="email" required />
                 </FormControl>
-                <FormControl >
+                <FormControl>
                   <FormLabel>Password</FormLabel>
-                  <Input type="text" name="password" />
+                  <Input type="password" name="password" required />
                 </FormControl>
                 <Stack gap={4} sx={{ mt: 2 }}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Checkbox size="sm" label="Remember me" name="persistent" />
-                    <Link level="title-sm" href="">
-                      Forgot your password?
-                    </Link>
                   </Box>
-                  <Button type="submit" fullWidth>
+                  <Button type="submit" fullWidth loading={isLoading}>
                     Sign Up
                   </Button>
                 </Stack>
@@ -257,31 +222,6 @@ export default function JoyRegisterSideTemplate() {
           </Box>
         </Box>
       </Box>
-      <Box
-        sx={(theme) => ({
-          height: '100%',
-          position: 'fixed',
-          right: 0,
-          top: 0,
-          bottom: 0,
-          left: { xs: 0, md: '50vw' },
-          transition:
-            'background-image var(--Transition-duration), left var(--Transition-duration) !important',
-          transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
-          backgroundColor: 'background.level1',
-          backgroundSize: '',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'repeat',
-          backgroundImage:
-            'url(https://www.logo.wine/a/logo/Spotify/Spotify-White-Dark-Background-Logo.wine.svg)',
-          [theme.getColorSchemeSelector('dark')]: {
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundImage:
-              'url(https://static.vecteezy.com/system/resources/previews/022/841/111/original/chatgpt-logo-transparent-background-free-png.png)',
-          },
-        })}
-      />
     </CssVarsProvider>
   );
 }
