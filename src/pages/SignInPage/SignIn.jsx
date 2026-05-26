@@ -51,10 +51,7 @@ function ColorSchemeToggle(props) {
 export default function SignIn() {
   const navigate = useNavigate()
 
-  // When user submits sign-in page, send back credentials to compare, 
   async function handleSubmit(d) {
-    
-
     const res = await fetch("https://songify-ai-backend.onrender.com/users/login", {
       method: "POST",
       headers: {
@@ -67,8 +64,7 @@ export default function SignIn() {
     })
 
     const data = await res.json()
-    
-    // if response comes back good then let user log in and direct them to the messages page
+
     if (data) {
       localStorage.setItem('userId', JSON.stringify(data))
       navigate('../messages')

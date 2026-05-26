@@ -19,14 +19,11 @@ export default function MessagesPane(props) {
   const [songCounter, setSongCounter] = React.useState([0])
   
   
-  // When user submits, fetch a get song req from back end
   async function handleSubmit() {
     const newId = chatMessages.length + 1;
     const newIdString = newId.toString();
 
     try {
-
-      // Send back end our users message so gpt can respond with a song recommendation
       if (textAreaValue) {
         const spotifyRes = await fetch("https://songify-ai-backend.onrender.com/songify/song", {
           method: "POST",
@@ -43,7 +40,6 @@ export default function MessagesPane(props) {
 
         setReccSong(newSong)
 
-        // What user sees
         setChatMessages([
           ...chatMessages,
           {
@@ -59,16 +55,11 @@ export default function MessagesPane(props) {
             timestamp: 'Just Now',
           }
         ]);
-        console.log(chat)
 
-      } else {
-        console.log("Err: no message")
       }
 
-
-
     } catch (err) {
-      console.log(err)
+      // error handling to be wired to UI in a later pass
     }
 
   }

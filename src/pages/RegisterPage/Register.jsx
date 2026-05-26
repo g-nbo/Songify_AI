@@ -49,9 +49,7 @@ export default function JoyRegisterSideTemplate() {
   const navigate = useNavigate()
 
 
-  // When user submits registration take info and submit to back-end if it fits our schema
   async function handleSubmit(d) {
-
     const res = await fetch("https://songify-ai-backend.onrender.com/users/register", {
       method: "POST",
       headers: {
@@ -66,7 +64,6 @@ export default function JoyRegisterSideTemplate() {
     })
     const data = await res.json()
 
-    // If it went through send users to login page to login with their new credentials
     if (data.email) {
       navigate("../login")
     }

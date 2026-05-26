@@ -6,10 +6,7 @@ function SongCard(props) {
     const context = useContext(UserContext)
 
 
-    // When user clicks favorite
     async function handleFavorite() {
-
-
         const res = await fetch('https://songify-ai-backend.onrender.com/songify/favorite', {
             method: "POST",
             headers: {
@@ -23,19 +20,12 @@ function SongCard(props) {
 
         const data = await res.json()
 
-
-        // Reflect db changes in local storage for users view
         const user = JSON.parse(localStorage.getItem("userId"))
-
         user.favorites.push(props.songId)
-
         localStorage.setItem("userId", JSON.stringify(user))
     }
 
-    // When user clicks unfavorite
     async function handleDeleteFav() {
-
-
         const res = await fetch('https://songify-ai-backend.onrender.com/songify/favorite/delete', {
             method: "DELETE",
             headers: {
@@ -49,10 +39,7 @@ function SongCard(props) {
 
         const data = await res.json()
 
-
-        // Reflect db changes in local storage for users view
         const user = JSON.parse(localStorage.getItem("userId"))
-
         const favoriteIndex = user.favorites.indexOf(props.songId)
 
         user.favorites.splice(props.songId, 1)
