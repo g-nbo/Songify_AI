@@ -11,6 +11,16 @@ export function UserProvider({ children }) {
     refreshSession().finally(() => setLoading(false));
   }, []);
 
+  // Proactively refresh the access token 1 minute before it expires (15m - 1m = 14m).
+  // Prevents any in-flight request from hitting a 401 mid-session.
+  useEffect(() => {
+    if (!accessToken) return;
+    const timer = setTimeout(() => {
+      refreshSession();
+    }, 14 * 60 * 1000);
+    return () => clearTimeout(timer);
+  }, [accessToken]);
+
   async function refreshSession() {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/users/refresh`, {
