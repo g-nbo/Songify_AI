@@ -56,7 +56,7 @@ function EmptyState() {
 }
 
 export default function FavoritesPage() {
-    const { user, accessToken } = useUser();
+    const { user, accessToken, updateFavorites } = useUser();
     const [tracks, setTracks] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -90,10 +90,12 @@ export default function FavoritesPage() {
                 'Authorization': `Bearer ${accessToken}`,
             },
             credentials: 'include',
-            body: JSON.stringify({ id: user._id, songId: trackId }),
+            body: JSON.stringify({ songId: trackId }),
         });
 
         if (res.ok) {
+            const updatedFavorites = await res.json();
+            updateFavorites(updatedFavorites);
             setTracks(prev => prev.filter(t => t.id !== trackId));
         }
     }
