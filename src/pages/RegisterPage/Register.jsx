@@ -18,6 +18,7 @@ import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import { IconButton } from '@mui/joy';
 import { useNavigate } from 'react-router-dom';
 import SmartToy from '@mui/icons-material/SmartToy';
+import { useUser } from '../../context/UserContext';
 
 function ColorSchemeToggle(props) {
   const { onClick, ...other } = props;
@@ -45,6 +46,7 @@ function ColorSchemeToggle(props) {
 
 export default function JoyRegisterSideTemplate() {
   const navigate = useNavigate();
+  const { login } = useUser();
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState('');
 
@@ -52,20 +54,34 @@ export default function JoyRegisterSideTemplate() {
     setIsLoading(true);
     setError('');
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/users/register`, {
+      const registerRes = await fetch(`${import.meta.env.VITE_API_URL}/users/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({ name: d.name, email: d.email, password: d.password, favorites: [] }),
       });
 
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
+      if (!registerRes.ok) {
+        const err = await registerRes.json().catch(() => ({}));
         setError(err.message || 'Registration failed. Please try again.');
         return;
       }
 
-      navigate('/login');
+      const loginRes = await fetch(`${import.meta.env.VITE_API_URL}/users/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email: d.email, password: d.password }),
+      });
+
+      if (!loginRes.ok) {
+        navigate('/login');
+        return;
+      }
+
+      const data = await loginRes.json();
+      login(data.user, data.accessToken);
+      navigate('/messages');
     } catch {
       setError('Something went wrong. Please try again.');
     } finally {
