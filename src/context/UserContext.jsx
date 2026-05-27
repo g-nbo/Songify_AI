@@ -18,6 +18,7 @@ export function UserProvider({ children }) {
         credentials: 'include',
       });
       if (!res.ok) {
+        console.warn('[auth] refresh failed', res.status, await res.text().catch(() => ''));
         setUser(null);
         setAccessToken(null);
         return;
@@ -25,7 +26,8 @@ export function UserProvider({ children }) {
       const data = await res.json();
       setUser(data.user);
       setAccessToken(data.accessToken);
-    } catch {
+    } catch (err) {
+      console.warn('[auth] refresh error', err.message);
       setUser(null);
       setAccessToken(null);
     }

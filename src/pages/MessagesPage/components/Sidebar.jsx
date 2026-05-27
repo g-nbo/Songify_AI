@@ -35,6 +35,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import { Link } from '@mui/joy';
+import { Link as RouterLink } from 'react-router-dom';
 
 import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '../utils';
@@ -159,11 +160,7 @@ export default function Sidebar() {
           }}
         >
           <ListItem>
-            <ListItemButton
-              role="menuitem"
-              component="a"
-              href="/"
-            >
+            <ListItemButton component={RouterLink} to="/">
               <HomeRoundedIcon />
               <ListItemContent>
                 <Typography level="title-sm">Home</Typography>
@@ -171,51 +168,18 @@ export default function Sidebar() {
             </ListItemButton>
           </ListItem>
           <ListItem>
-            <ListItemButton
-              role="menuitem"
-              component="a"
-              href="favorites"
-            >
+            <ListItemButton component={RouterLink} to="/favorites">
               <FavoriteIcon />
               <ListItemContent>
                 <Typography level="title-sm">Favorites</Typography>
               </ListItemContent>
             </ListItemButton>
           </ListItem>
-
           <ListItem>
-            <ListItemButton selected>
+            <ListItemButton selected component={RouterLink} to="/messages">
               <QuestionAnswerRoundedIcon />
               <ListItemContent>
                 <Typography level="title-sm">Messages</Typography>
-              </ListItemContent>
-              <Chip size="sm" color="primary" variant="solid">
-                4
-              </Chip>
-            </ListItemButton>
-          </ListItem>
-
-          <ListItem>
-            <ListItemButton
-              role="menuitem"
-              component="a"
-              href="login"
-            >
-              <Login />
-              <ListItemContent>
-                <Typography level="title-sm">Login</Typography>
-              </ListItemContent>
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton
-              role="menuitem"
-              component="a"
-              href="register"
-            >
-              <AppRegistrationIcon />
-              <ListItemContent>
-                <Typography level="title-sm">Register</Typography>
               </ListItemContent>
             </ListItemButton>
           </ListItem>
