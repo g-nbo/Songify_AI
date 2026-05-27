@@ -50,8 +50,12 @@ export function UserProvider({ children }) {
     }
   }
 
+  function updateFavorites(newFavorites) {
+    setUser(prev => prev ? { ...prev, favorites: newFavorites } : prev);
+  }
+
   return (
-    <UserContext.Provider value={{ user, accessToken, login, logout, loading }}>
+    <UserContext.Provider value={{ user, accessToken, login, logout, loading, updateFavorites }}>
       {children}
     </UserContext.Provider>
   );
