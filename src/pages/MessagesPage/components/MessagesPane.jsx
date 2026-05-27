@@ -2,6 +2,7 @@ import * as React from 'react';
 import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
+import Alert from '@mui/joy/Alert';
 import AvatarWithStatus from './AvatarWithStatus';
 import ChatBubble from './ChatBubble';
 import MessageInput from './MessageInput';
@@ -9,61 +10,65 @@ import MessagesPaneHeader from './MessagesPaneHeader';
 import SongCard from '../../../components/SongCard';
 import { useUser } from '../../../context/UserContext';
 
-
-
 export default function MessagesPane(props) {
   const { chat } = props;
   const { accessToken } = useUser();
   const [chatMessages, setChatMessages] = React.useState(chat.messages);
   const [textAreaValue, setTextAreaValue] = React.useState('');
-  const [reccSong, setReccSong] = React.useState([])
-  
-  
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState('');
+
   async function handleSubmit() {
-    const newId = chatMessages.length + 1;
-    const newIdString = newId.toString();
+    if (!textAreaValue.trim()) return;
+
+    setError('');
+    setIsLoading(true);
+
+    const newId = String(Date.now());
+
+    const userMessage = {
+      id: newId,
+      sender: 'You',
+      content: textAreaValue,
+      timestamp: 'Just now',
+    };
+
+    setChatMessages(prev => [...prev, userMessage]);
+    setTextAreaValue('');
 
     try {
-      if (textAreaValue) {
-        const spotifyRes = await fetch(`${import.meta.env.VITE_API_URL}/songify/song`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`,
-          },
-          credentials: 'include',
-          body: JSON.stringify({
-            "message": textAreaValue,
-          })
-        })
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/songify/song`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        credentials: 'include',
+        body: JSON.stringify({ message: textAreaValue }),
+      });
 
-        const spotifyData = await spotifyRes.json();
-        const newSong = spotifyData
-
-        setReccSong(newSong)
-
-        setChatMessages([
-          ...chatMessages,
-          {
-            id: newIdString,
-            sender: 'You',
-            content: textAreaValue,
-            timestamp: 'Just now',
-          },
-          {
-            id: newIdString + 1,
-            sender: chat.sender,
-            content: <SongCard key={newId} songId={newSong[1]} songExplanation={newSong[0]} />,
-            timestamp: 'Just Now',
-          }
-        ]);
-
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        setError(err.message || 'Could not get a recommendation. Please try again.');
+        return;
       }
 
-    } catch (err) {
-      // error handling to be wired to UI in a later pass
-    }
+      const [songExplanation, songId] = await res.json();
 
+      setChatMessages(prev => [
+        ...prev,
+        {
+          id: String(Date.now() + 1),
+          sender: chat.sender,
+          content: <SongCard songId={songId} songExplanation={songExplanation} />,
+          timestamp: 'Just now',
+        },
+      ]);
+    } catch {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   React.useEffect(() => {
@@ -80,6 +85,11 @@ export default function MessagesPane(props) {
       }}
     >
       <MessagesPaneHeader sender={chat.sender} />
+      {error && (
+        <Alert color="danger" variant="soft" sx={{ mx: 2, mt: 1 }} onClose={() => setError('')}>
+          {error}
+        </Alert>
+      )}
       <Box
         sx={{
           display: 'flex',
@@ -107,7 +117,7 @@ export default function MessagesPane(props) {
                     src={message.sender.avatar}
                   />
                 )}
-                <ChatBubble songId={reccSong[1]} variant={isYou ? 'sent' : 'received'} {...message} />
+                <ChatBubble variant={isYou ? 'sent' : 'received'} {...message} />
               </Stack>
             );
           })}
@@ -116,9 +126,8 @@ export default function MessagesPane(props) {
       <MessageInput
         textAreaValue={textAreaValue}
         setTextAreaValue={setTextAreaValue}
-        onSubmit={() => {
-          handleSubmit()
-        }}
+        isLoading={isLoading}
+        onSubmit={handleSubmit}
       />
     </Sheet>
   );
