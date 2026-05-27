@@ -15,6 +15,7 @@ import QuestionAnswerRounded from '@mui/icons-material/QuestionAnswerRounded';
 import FavoriteRounded from '@mui/icons-material/FavoriteRounded';
 import { CssVarsProvider } from '@mui/joy/styles';
 import CssBaseline from '@mui/joy/CssBaseline';
+import { Link as RouterLink } from 'react-router-dom';
 
 function SkeletonCard() {
     return (
@@ -50,7 +51,7 @@ function EmptyState() {
             <Typography level="body-sm" sx={{ opacity: 0.4 }}>
                 Head to the chat and save some songs you love.
             </Typography>
-            <Link href="/messages" level="title-sm">Go to chat →</Link>
+            <Link component={RouterLink} to="/messages" level="title-sm">Go to chat →</Link>
         </Box>
     );
 }
@@ -117,10 +118,10 @@ export default function FavoritesPage() {
                         )}
                     </Box>
                     <Box sx={{ display: 'flex', gap: 1 }}>
-                        <IconButton component="a" href="/" variant="soft" size="sm" aria-label="Home">
+                        <IconButton component={RouterLink} to="/" variant="soft" size="sm" aria-label="Home">
                             <HomeRounded />
                         </IconButton>
-                        <IconButton component="a" href="/messages" variant="soft" size="sm" aria-label="Chat">
+                        <IconButton component={RouterLink} to="/messages" variant="soft" size="sm" aria-label="Chat">
                             <QuestionAnswerRounded />
                         </IconButton>
                     </Box>

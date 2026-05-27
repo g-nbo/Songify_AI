@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import Button from '@mui/joy/Button';
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import { useUser } from '../context/UserContext';
 
 function SongCard(props) {
@@ -55,8 +58,19 @@ function SongCard(props) {
         }
     }
 
+    const [actionLoading, setActionLoading] = useState(false);
     const isFavorited = user?.favorites?.includes(props.songId);
     const src = `https://open.spotify.com/embed/track/${props.songId}/?utm_source=generator`;
+
+    async function handleToggleFavorite() {
+        setActionLoading(true);
+        if (isFavorited) {
+            await handleDeleteFav();
+        } else {
+            await handleFavorite();
+        }
+        setActionLoading(false);
+    }
 
     return (
         <>
@@ -76,12 +90,16 @@ function SongCard(props) {
                     />
                     <br /><br />
                     {error && <p style={{ color: 'red', fontSize: '0.8rem' }}>{error}</p>}
-                    <span>
-                        {isFavorited
-                            ? <button onClick={handleDeleteFav}>Unfavorite</button>
-                            : <button onClick={handleFavorite}>Favorite</button>
-                        }
-                    </span>
+                    <Button
+                        size="sm"
+                        variant={isFavorited ? 'soft' : 'outlined'}
+                        color={isFavorited ? 'danger' : 'neutral'}
+                        loading={actionLoading}
+                        startDecorator={isFavorited ? <FavoriteRoundedIcon /> : <FavoriteBorderRoundedIcon />}
+                        onClick={handleToggleFavorite}
+                    >
+                        {isFavorited ? 'Unfavorite' : 'Favorite'}
+                    </Button>
                 </>
             ) : (
                 <p>Something Went Wrong...</p>

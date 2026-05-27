@@ -13,12 +13,11 @@ import SendRoundedIcon from '@mui/icons-material/SendRounded';
 
 
 export default function MessageInput(props) {
-  const { textAreaValue, setTextAreaValue, onSubmit } = props;
+  const { textAreaValue, setTextAreaValue, onSubmit, isLoading } = props;
   const textAreaRef = React.useRef(null);
   const handleClick = () => {
     if (textAreaValue.trim() !== '') {
       onSubmit();
-      setTextAreaValue('');
     }
   };
   return (
@@ -28,14 +27,12 @@ export default function MessageInput(props) {
           placeholder="Type something here…"
           aria-label="Message"
           ref={textAreaRef}
+          disabled={isLoading}
           onChange={(e) => {
             setTextAreaValue(e.target.value);
-
-            if(e.nativeEvent.inputType === 'insertLineBreak') {
-              handleClick()
+            if (e.nativeEvent.inputType === 'insertLineBreak') {
+              handleClick();
             }
-            
-
           }}
           value={textAreaValue}
           minRows={3}
@@ -69,17 +66,19 @@ export default function MessageInput(props) {
               </div>
               <Button
                 size="sm"
-                style={{backgroundColor: 'green'}}
+                color="success"
                 sx={{ alignSelf: 'center', borderRadius: 'sm' }}
                 endDecorator={<SendRoundedIcon />}
                 onClick={handleClick}
+                loading={isLoading}
+                disabled={isLoading}
               >
                 Send
               </Button>
             </Stack>
           }
           onKeyDown={(event) => {
-            if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) {
+            if (event.key === 'Enter' && (event.metaKey || event.ctrlKey) && !isLoading) {
               handleClick();
             }
           }}
